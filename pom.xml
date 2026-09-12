@@ -7,6 +7,29 @@
     <groupId>com.insurancecore</groupId>
     <artifactId>insurance-core</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
-    
+    <properties>
+        <maven.compiler.release>11</maven.compiler.release>
+    </properties>
+
+    <modules>
+        <module>insurance-domain</module>
+        <module>insurance-persistence</module>
+        <module>insurance-service</module>
+        <module>insurance-rest</module>
+        <module>insurance-web</module>
+    </modules>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.16.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>
