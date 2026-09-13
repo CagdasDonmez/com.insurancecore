@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -24,6 +25,7 @@ public class Policy {
     private boolean cancelled;
     @OneToMany
     private Claim claim;
+    private BigDecimal premium;
     @Version
     private Long version;
 
