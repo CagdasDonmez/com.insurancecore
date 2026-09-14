@@ -8,6 +8,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Stateless
 public class PolicyService {
@@ -44,5 +45,9 @@ public class PolicyService {
 
         policyRepository.persist(policy);
         return policy;
+    }
+
+    public List<Policy> getPolicies() {
+        return policyRepository.findAll();
     }
 }

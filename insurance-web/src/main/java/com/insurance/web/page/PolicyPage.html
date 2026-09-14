@@ -1,0 +1,25 @@
+<h1>Insurance Core</h1>
+
+<span wicket:id="policies"></span>
+<p>----------</p>
+
+<h3>Welcome to the policy management page.</h3>
+
+<ul>
+    <li wicket:id="policyRows">
+    <span wicket:id="policyNumber"></span>
+    |
+    <span wicket:id="policyPremium"></span>
+    </li>
+</ul>
+
+<form wicket:id="createPolicyForm">
+    <label for="policyNumberInput">Policy number: </label>
+    <input type="text" wicket:id="policyNumber" name="policyNumberInput"><br>
+    <label for="policyPremiumInput">Policy premium: </label>
+    <input type="text" wicket:id="premium" name="policyPremiumInput">
+    <button type="submit" wicket:id="createButton">Create Policy</button>
+</form>
+
+<div class="w3-panel w3-info" wicket:id="feedback">
+</div>
