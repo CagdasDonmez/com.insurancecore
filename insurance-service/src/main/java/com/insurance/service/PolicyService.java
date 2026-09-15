@@ -16,7 +16,7 @@ public class PolicyService {
     @EJB
     private PolicyRepository policyRepository;
 
-    public Policy createPolicy (Policy policy) {
+    public Policy createPolicy (Policy policy) throws InvalidPolicyException {
         Customer customer = policy.getCustomer();
 
         if (customer == null) {

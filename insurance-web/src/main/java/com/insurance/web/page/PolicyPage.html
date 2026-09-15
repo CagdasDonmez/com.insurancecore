@@ -16,10 +16,14 @@
 <form wicket:id="createPolicyForm">
     <label for="policyNumberInput">Policy number: </label>
     <input type="text" wicket:id="policyNumber" name="policyNumberInput"><br>
+
     <label for="policyPremiumInput">Policy premium: </label>
     <input type="text" wicket:id="premium" name="policyPremiumInput">
+
     <button type="submit" wicket:id="createButton">Create Policy</button>
 </form>
 
 <div class="w3-panel w3-info" wicket:id="feedback">
 </div>
+
+<a wicket:id="claimsLink">Claims</a>

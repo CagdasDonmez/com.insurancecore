@@ -1,0 +1,35 @@
+<h1 xmlns:wicket="http://www.w3.org/1999/xhtml">Claims</h1>
+
+<span wicket:id="claims"></span>
+<p>----------</p>
+
+<h3>Welcome to the claims management page.</h3>
+
+<ul>
+    <li wicket:id="claimRows">
+        <span wicket:id="claimNumber"></span>
+        |
+        <span wicket:id="amount"></span>
+    </li>
+</ul>
+
+<form wicket:id="createClaimForm">
+    <label for="claimNumberInput">Claim number: </label>
+    <input type="text" wicket:id="claimNumber" name="claimNumberInput"><br>
+
+    <label for="claimAmountInput">Amount: </label>
+    <input type="number" wicket:id="amount" name="claimAmountInput">
+
+    <label for="creationDateInput">Creation Date: </label>
+    <input type="date" wicket:id="creationDate" name="creationDateInput">
+
+    <label for="claimDescriptionInput">Description: </label>
+    <input type="text" wicket:id="description" name="claimDescriptionInput">
+
+    <button type="submit" wicket:id="createClaimButton">Create Claim</button>
+</form>
+
+<div class="w3-panel w3-info" wicket:id="feedback">
+</div>
+
+<a wicket:id="policiesLink">Policies</a>
