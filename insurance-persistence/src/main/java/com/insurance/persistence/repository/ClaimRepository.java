@@ -20,7 +20,7 @@ public class ClaimRepository {
         return selectCFromClaimC.getResultList();
     }
 
-    public Optional<Claim> findById(int id) {
+    public Optional<Claim> findById(Long id) {
         return Optional.ofNullable(entityManager.find(Claim.class, id));
     }
 

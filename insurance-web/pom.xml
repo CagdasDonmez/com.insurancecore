@@ -13,18 +13,21 @@
     <artifactId>insurance-web</artifactId>
     <packaging>war</packaging>
 
-    <dependencies>
+    <dependencies><dependency><groupId>javax.servlet</groupId><artifactId>javax.servlet-api</artifactId><version>4.0.1</version><scope>provided</scope></dependency><dependency><groupId>org.apache.wicket</groupId><artifactId>wicket-extensions</artifactId><version>9.24.0</version></dependency>
         <dependency>
             <groupId>com.insurancecore</groupId>
             <artifactId>insurance-service</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <!-- Source: https://mvnrepository.com/artifact/org.apache.wicket/wicket-core -->
         <dependency>
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket-core</artifactId>
-            <version>10.11.0</version>
-            <scope>compile</scope>
+            <version>9.24.0</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.6.0</version>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
@@ -32,6 +35,17 @@
             <version>8.0.1</version>
             <scope>provided</scope>
         </dependency>
+        <dependency><groupId>org.junit.jupiter</groupId><artifactId>junit-jupiter</artifactId><version>5.11.4</version><scope>test</scope></dependency>
     </dependencies>
+    <build>
+        <resources>
+            <resource><directory>src/main/resources</directory></resource>
+            <resource><directory>src/main/java</directory><includes><include>**/*.html</include></includes></resource>
+        </resources>
+        <plugins>
+            <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-war-plugin</artifactId><version>3.4.0</version></plugin>
+            <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-surefire-plugin</artifactId><version>3.5.2</version></plugin>
+        </plugins>
+    </build>
 
 </project>

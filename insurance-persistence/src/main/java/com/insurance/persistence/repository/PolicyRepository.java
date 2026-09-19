@@ -15,6 +15,10 @@ public class PolicyRepository {
     @PersistenceContext(unitName = "insurancePU")
     private EntityManager entityManager;
 
+    public Optional<com.insurance.domain.entity.Customer> findCustomer(Long id) {
+        return Optional.ofNullable(entityManager.find(com.insurance.domain.entity.Customer.class, id));
+    }
+
     public Optional<Policy> findById(Long id) {
         return Optional.ofNullable(entityManager.find(Policy.class, id));
     }

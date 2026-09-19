@@ -10,6 +10,8 @@
         <span wicket:id="claimNumber"></span>
         |
         <span wicket:id="amount"></span>
+        <span wicket:id="creationDate"></span>
+        <span wicket:id="description"></span>
     </li>
 </ul>
 
@@ -18,14 +20,15 @@
     <input type="text" wicket:id="claimNumber" name="claimNumberInput"><br>
 
     <label for="claimAmountInput">Amount: </label>
-    <input type="number" wicket:id="amount" name="claimAmountInput">
+    <input type="text" wicket:id="amount" name="claimAmountInput">
 
     <label for="creationDateInput">Creation Date: </label>
-    <input type="date" wicket:id="creationDate" name="creationDateInput">
+    <input type="text" placeholder="yyyy-MM-dd" wicket:id="creationDate" name="creationDateInput">
 
     <label for="claimDescriptionInput">Description: </label>
     <input type="text" wicket:id="description" name="claimDescriptionInput">
 
+    <label>Policy ID: <input type="text" wicket:id="policyId"></label>
     <button type="submit" wicket:id="createClaimButton">Create Claim</button>
 </form>
 

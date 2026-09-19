@@ -16,6 +16,13 @@ public class PolicyService {
     @EJB
     private PolicyRepository policyRepository;
 
+    public Policy createPolicy(Policy policy, Long customerId) {
+        if (customerId == null) { throw new InvalidPolicyException("Customer ID is required"); }
+        policy.setCustomer(policyRepository.findCustomer(customerId)
+            .orElseThrow(() -> new InvalidPolicyException("Customer does not exist")));
+        return createPolicy(policy);
+    }
+
     public Policy createPolicy (Policy policy) throws InvalidPolicyException {
         Customer customer = policy.getCustomer();
 

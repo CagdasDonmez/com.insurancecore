@@ -4,6 +4,9 @@ import com.insurance.domain.entity.Policy;
 import com.insurance.service.InvalidPolicyException;
 import com.insurance.service.PolicyService;
 import org.apache.wicket.markup.html.WebPage;
+import com.insurance.web.InsuranceApplication;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.extensions.markup.html.form.datetime.LocalDateTextField;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -23,8 +26,9 @@ import java.util.List;
 
 public class PolicyPage extends WebPage {
 
-    // @EJB
-    private PolicyService policyService;
+    private PolicyService service() {
+        return ((InsuranceApplication) getApplication()).getPolicyService();
+    }
 
     public PolicyPage() {
         initPage();
@@ -36,7 +40,7 @@ public class PolicyPage extends WebPage {
         LoadableDetachableModel<List<Policy>> ldm_policies = new  LoadableDetachableModel<List<Policy>>() {
             @Override
             protected List<Policy> load() {
-                return policyService.getPolicies();
+                return service().getPolicies();
             }
         };
 
@@ -49,6 +53,7 @@ public class PolicyPage extends WebPage {
             }
         });
 
+        Model<Long> customerId = Model.of();
         Policy newPolicy = new Policy();
         CompoundPropertyModel<Policy> model = new CompoundPropertyModel<>(newPolicy);
         Form<Policy> form = new Form<>("createPolicyForm", model) {
@@ -56,7 +61,7 @@ public class PolicyPage extends WebPage {
             protected void onSubmit() {
                 Policy submittedPolicy = getModelObject();
                 try {
-                    policyService.createPolicy(submittedPolicy);
+                    service().createPolicy(submittedPolicy, customerId.getObject());
                     setModelObject(new Policy());
                 } catch (InvalidPolicyException e) {
                     this.error("Policy validation failed. " + e.getMessage());
@@ -77,6 +82,10 @@ public class PolicyPage extends WebPage {
             }
         });
         form.add(premium);
+
+        form.add(new TextField<Long>("customerId", customerId, Long.class).setRequired(true));
+        form.add(new LocalDateTextField("validFrom", "yyyy-MM-dd").setRequired(true));
+        form.add(new LocalDateTextField("validTo", "yyyy-MM-dd").setRequired(true));
 
         Button createPolicyButton = new Button("createButton");
         form.add(createPolicyButton);

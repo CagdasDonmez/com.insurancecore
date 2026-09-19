@@ -5,14 +5,26 @@ import com.insurance.domain.entity.Policy;
 import com.insurance.persistence.repository.ClaimRepository;
 
 import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+@Stateless
 public class ClaimService {
 
     @EJB
     private ClaimRepository claimRepository;
+
+    @EJB
+    private com.insurance.persistence.repository.PolicyRepository policyRepository;
+
+    public Claim createClaim(Claim claim, Long policyId) {
+        if (policyId == null) { throw new InvalidClaimException("Policy ID is required"); }
+        claim.setPolicy(policyRepository.findById(policyId)
+            .orElseThrow(() -> new InvalidClaimException("Policy does not exist")));
+        return createClaim(claim);
+    }
 
     public Claim createClaim(Claim claim) throws InvalidClaimException {
         Policy policy = claim.getPolicy();

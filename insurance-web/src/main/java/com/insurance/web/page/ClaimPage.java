@@ -4,6 +4,9 @@ import com.insurance.domain.entity.Claim;
 import com.insurance.service.ClaimService;
 import com.insurance.service.InvalidClaimException;
 import org.apache.wicket.markup.html.WebPage;
+import com.insurance.web.InsuranceApplication;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.extensions.markup.html.form.datetime.LocalDateTextField;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -22,7 +25,9 @@ import java.util.List;
 
 public class ClaimPage extends WebPage {
 
-    private ClaimService claimService;
+    private ClaimService service() {
+        return ((InsuranceApplication) getApplication()).getClaimService();
+    }
 
     public ClaimPage() {
         initPage();
@@ -34,7 +39,7 @@ public class ClaimPage extends WebPage {
         LoadableDetachableModel<List<Claim>> ldm_claims = new  LoadableDetachableModel<>() {
             @Override
             protected List<Claim> load() {
-                return claimService.getClaims();
+                return service().getClaims();
             }
         };
 
@@ -49,6 +54,7 @@ public class ClaimPage extends WebPage {
             }
         });
 
+        Model<Long> policyId = Model.of();
         Claim claim = new Claim();
         CompoundPropertyModel<Claim> model = new CompoundPropertyModel<>(claim);
         Form<Claim> form = new Form<Claim>("createClaimForm", model) {
@@ -56,7 +62,7 @@ public class ClaimPage extends WebPage {
             protected void onSubmit() {
                 Claim submittedClaim = getModelObject();
                 try {
-                    claimService.createClaim(submittedClaim);
+                    service().createClaim(submittedClaim, policyId.getObject());
                     setModelObject(new Claim());
                 } catch (InvalidClaimException e) {
                     this.error(e.getMessage());
@@ -78,11 +84,11 @@ public class ClaimPage extends WebPage {
         });
         form.add(amount);
 
-        TextField<LocalDate> creationDate = new TextField<>("creationDate");
+        LocalDateTextField creationDate = new LocalDateTextField("creationDate", "yyyy-MM-dd");
         creationDate.setRequired(true);
         creationDate.add(validatable -> {
             LocalDate value = validatable.getValue();
-            if (!value.isAfter(LocalDate.now())) {
+            if (value.isBefore(LocalDate.now())) {
                 validatable.error((IValidationError) messageSource -> "Creation Date can not be in the past.");
             }
         });
@@ -90,6 +96,8 @@ public class ClaimPage extends WebPage {
 
         TextField<String> description = new TextField<>("description");
         form.add(description);
+
+        form.add(new TextField<Long>("policyId", policyId, Long.class).setRequired(true));
 
         Button createButton = new Button("createClaimButton");
         form.add(createButton);
