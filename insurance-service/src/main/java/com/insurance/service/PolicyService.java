@@ -2,6 +2,7 @@ package com.insurance.service;
 
 import com.insurance.domain.entity.Customer;
 import com.insurance.domain.entity.Policy;
+import com.insurance.persistence.repository.CustomerRepository;
 import com.insurance.persistence.repository.PolicyRepository;
 
 import javax.ejb.EJB;
@@ -16,10 +17,19 @@ public class PolicyService {
     @EJB
     private PolicyRepository policyRepository;
 
+    @EJB
+    private CustomerRepository customerRepository;
+
     public Policy createPolicy(Policy policy, Long customerId) {
         if (customerId == null) { throw new InvalidPolicyException("Customer ID is required"); }
         policy.setCustomer(policyRepository.findCustomer(customerId)
             .orElseThrow(() -> new InvalidPolicyException("Customer does not exist")));
+        return createPolicy(policy);
+    }
+
+    public Policy createPolicy(Policy policy, String customerNumber) {
+        if  (customerNumber == null) { throw new InvalidPolicyException("Customer Number is required"); }
+        policy.setCustomer(customerRepository.findCustomerByCustomerNumber(customerNumber).orElseThrow(() -> new InvalidPolicyException("Customer does not exist")));
         return createPolicy(policy);
     }
 
