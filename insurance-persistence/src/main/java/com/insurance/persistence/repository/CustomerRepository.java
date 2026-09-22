@@ -24,7 +24,9 @@ public class CustomerRepository {
     }
 
     public Optional<Customer> findCustomerByCustomerNumber(String customerNumber) {
-        return Optional.ofNullable(entityManager.find(Customer.class, customerNumber));
+        TypedQuery<Customer> query = entityManager.createQuery("select c from Customer c where c.customerNumber = :customerNumber", Customer.class)
+                .setParameter("customerNumber", customerNumber);
+        return query.getResultList().stream().findFirst();
     }
 
     public List<Customer> findAllCustomers() {

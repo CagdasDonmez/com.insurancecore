@@ -67,4 +67,8 @@ public class PolicyService {
     public List<Policy> getPolicies() {
         return policyRepository.findAll();
     }
+
+    public Policy getPolicy(Long id) {
+        return policyRepository.findById(id).orElseThrow(() -> new PolicyNotFoundException("Policy does not exist"));
+    }
 }
