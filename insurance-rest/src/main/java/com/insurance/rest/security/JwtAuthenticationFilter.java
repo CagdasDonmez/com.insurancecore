@@ -16,7 +16,7 @@ public class JwtAuthenticationFilter implements ContainerRequestFilter {
     private final JwtValidator jwtValidator  = new JwtValidator();
 
     @Override
-    public void filter(ContainerRequestContext requestContext) throws IOException {
+    public void filter(ContainerRequestContext requestContext) {
         String authorization = requestContext.getHeaderString("Authorization");
         if (authorization == null || !authorization.startsWith("Bearer ")) {
             requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
