@@ -29,31 +29,30 @@ public class JwtAuthenticationFilter implements ContainerRequestFilter {
             return;
         }
 
+        JWTClaimsSet jwtClaimsSet;
         try {
-            JWTClaimsSet jwtClaimsSet = jwtValidator.validate(token);
-            Map<String, Object> claims = jwtClaimsSet.getClaims();
-            Map<String, Object> realmAccess =
-                    (Map<String, Object>) claims.get("realm_access");
-            if (realmAccess != null) {
-                List<String> roles =
-                        (List<String>) realmAccess.get("roles");
-                if (roles != null) {
-                    if (!roles.contains("POLICY_USER")) {
-                        requestContext.abortWith(Response.status(Response.Status.FORBIDDEN).build());
-                        return;
-                    }
-                } else  {
-                    requestContext.abortWith(Response.status(Response.Status.FORBIDDEN).build());
-                    return;
-                }
-            } else {
-                requestContext.abortWith(Response.status(Response.Status.FORBIDDEN).build());
-                return;
-            }
-
+            jwtClaimsSet = jwtValidator.validate(token);
         } catch (Exception e) {
             requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
             return;
+        }
+
+        Map<String, Object> claims = jwtClaimsSet.getClaims();
+        Map<String, Object> realmAccess = (Map<String, Object>) claims.get("realm_access");
+
+        if (realmAccess == null) {
+            requestContext.abortWith(Response.status(Response.Status.FORBIDDEN).build());
+            return;
+        }
+
+        List<String> roles = (List<String>) realmAccess.get("roles");
+        if (roles == null) {
+            requestContext.abortWith(Response.status(Response.Status.FORBIDDEN).build());
+            return;
+        }
+
+        if (!roles.contains("POLICY_USER")) {
+            requestContext.abortWith(Response.status(Response.Status.FORBIDDEN).build());
         }
     }
 }
