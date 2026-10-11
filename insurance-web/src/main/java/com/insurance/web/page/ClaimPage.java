@@ -23,7 +23,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-public class ClaimPage extends WebPage {
+public class ClaimPage extends StyledPage {
 
     private ClaimService service() {
         return ((InsuranceApplication) getApplication()).getClaimService();

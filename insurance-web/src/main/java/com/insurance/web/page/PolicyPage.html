@@ -1,32 +1,35 @@
-<h1>Insurance Core</h1>
-
-<span wicket:id="policies"></span>
-<p>----------</p>
-
-<h3>Welcome to the policy management page.</h3>
-
-<ul>
-    <li wicket:id="policyRows">
-    <span wicket:id="policyNumber"></span>
-    |
-    <span wicket:id="policyPremium"></span>
-    </li>
-</ul>
-
-<form wicket:id="createPolicyForm">
-    <label for="policyNumberInput">Policy number: </label>
-    <input type="text" wicket:id="policyNumber" name="policyNumberInput"><br>
-
-    <label for="policyPremiumInput">Policy premium: </label>
-    <input type="text" wicket:id="premium" name="policyPremiumInput">
-
-    <label>Customer ID: <input type="text" wicket:id="customerId"></label>
-    <label>Valid from: <input type="text" placeholder="yyyy-MM-dd" wicket:id="validFrom"></label>
-    <label>Valid to: <input type="text" placeholder="yyyy-MM-dd" wicket:id="validTo"></label>
-    <button type="submit" wicket:id="createButton">Create Policy</button>
-</form>
-
-<div class="w3-panel w3-info" wicket:id="feedback">
+<!DOCTYPE html>
+<html lang="en" xmlns:wicket="http://wicket.apache.org">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Policies | Insurance Core</title></head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="workspace">
+    <aside class="sidebar">
+        <div class="brand"><span class="brand-mark" aria-hidden="true">ic</span><span>insurance<span class="brand-sub">CORE WORKSPACE</span></span></div>
+        <div class="nav-label">MANAGE</div>
+        <nav aria-label="Main navigation">
+            <a class="nav-item active" href="#main" aria-current="page"><span class="nav-icon" aria-hidden="true">&#9636;</span>Policies<span class="nav-arrow" aria-hidden="true">&#8599;</span></a>
+            <a class="nav-item" wicket:id="claimsLink"><span class="nav-icon" aria-hidden="true">&#9671;</span>Claims</a>
+        </nav>
+        <div class="sidebar-note"><span class="small-orbit" aria-hidden="true">&#9678;</span><strong>A little clarity.<br>A lot of confidence.</strong><p>Your policies and claims,<br>in one place.</p></div>
+        <div class="sidebar-footer"><span class="workspace-dot"></span>Insurance Core<span>v1.0</span></div>
+    </aside>
+    <div class="main-shell">
+        <header class="topbar"><span>Workspace <span class="breadcrumb-divider">/</span> <strong>Policies</strong></span><span class="workspace-label"><span class="workspace-dot"></span>Policy &amp; claims management</span></header>
+        <main id="main">
+            <div class="page-heading"><div><div class="eyebrow">YOUR INSURANCE WORKSPACE</div><h1 wicket:id="policies">Policies</h1><p>Keep every policy organized. Make room for peace of mind.</p></div><a class="button button-primary" href="#new-policy"><span aria-hidden="true">+</span> New policy</a></div>
+            <section class="overview-banner" aria-label="Policy overview"><div><span class="eyebrow">COVERAGE, MADE CLEAR</span><h2>Every policy. One clear view.</h2><p>Review premiums and add coverage from a single workspace.</p><a class="text-link" href="#policy-records">View policy register <span aria-hidden="true">&#8594;</span></a></div><div class="banner-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="art-document"><span>&#10003;</span><i></i><i></i><i></i></div></div></section>
+            <div class="content-grid">
+                <section class="card records" id="policy-records"><div class="card-heading"><div><div class="eyebrow">POLICY REGISTER</div><h2>All policies</h2></div><span class="neutral-badge">Overview</span></div><p class="section-description">Policy numbers and their associated premiums.</p>
+                    <div wicket:id="webMarkupContainer" class="record-container"><div class="table-scroll"><table><thead><tr><th scope="col">Policy number</th><th scope="col" class="numeric">Premium</th></tr></thead><tbody><tr wicket:id="policyRows"><td><span class="record-symbol" aria-hidden="true">&#9636;</span><span wicket:id="policyNumber" class="record-number"></span></td><td wicket:id="policyPremium" class="numeric amount"></td></tr></tbody></table></div><div class="empty-state"><strong>Your first policy starts here.</strong><p>Add a policy using the form to build your register.</p></div></div>
+                    <div class="table-footer"><span class="workspace-dot"></span>All policy records in your workspace</div>
+                </section>
+                <section class="card form-card" id="new-policy" aria-label="New policy"><div wicket:id="policyFormPanel"></div></section>
+            </div>
+            <div class="feedback" role="status" wicket:id="feedback"></div>
+            <footer class="page-footer"><span>Insurance Core</span><span>Clarity at every step.</span></footer>
+        </main>
+    </div>
 </div>
-
-<a wicket:id="claimsLink">Claims</a>
+</body>
+</html>
