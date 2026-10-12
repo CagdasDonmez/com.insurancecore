@@ -23,7 +23,7 @@ public class PolicyFormPanel extends Panel {
 
     private static final long serialVersionUID = 1L;
     private Form<Policy> form;
-    private PolicyCreatedCallback policyCreatedCallback;
+    private final PolicyCreatedCallback policyCreatedCallback;
 
     private PolicyService service() {
         return ((InsuranceApplication) getApplication()).getPolicyService();
@@ -55,7 +55,7 @@ public class PolicyFormPanel extends Panel {
         });
         form.add(premium);
 
-        form.add(new TextField<Long>("customerId", customerId, Long.class).setRequired(true));
+        form.add(new TextField<>("customerId", customerId, Long.class).setRequired(true));
         DateTextField validFrom = new DateTextField("validFrom","yyyy-MM-dd");
         validFrom.setRequired(true);
         form.add(validFrom);

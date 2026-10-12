@@ -4,10 +4,8 @@ import com.insurance.domain.entity.Claim;
 import com.insurance.service.ClaimService;
 import com.insurance.service.InvalidClaimException;
 import org.apache.wicket.extensions.markup.html.form.DateTextField;
-import org.apache.wicket.markup.html.WebPage;
 import com.insurance.web.InsuranceApplication;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.extensions.markup.html.form.datetime.LocalDateTextField;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -46,7 +44,7 @@ public class ClaimPage extends StyledPage {
             }
         };
 
-        add(new ListView<Claim>("claimRows", ldm_claims) {
+        add(new ListView<>("claimRows", ldm_claims) {
             @Override
             protected void populateItem(ListItem<Claim> item) {
                 Claim claim = item.getModelObject();
@@ -60,7 +58,7 @@ public class ClaimPage extends StyledPage {
         Model<Long> policyId = Model.of();
         Claim claim = new Claim();
         CompoundPropertyModel<Claim> model = new CompoundPropertyModel<>(claim);
-        Form<Claim> form = new Form<Claim>("createClaimForm", model) {
+        Form<Claim> form = new Form<>("createClaimForm", model) {
             @Override
             protected void onSubmit() {
                 Claim submittedClaim = getModelObject();
@@ -104,7 +102,7 @@ public class ClaimPage extends StyledPage {
         TextField<String> description = new TextField<>("description");
         form.add(description);
 
-        form.add(new TextField<Long>("policyId", policyId, Long.class).setRequired(true));
+        form.add(new TextField<>("policyId", policyId, Long.class).setRequired(true));
 
         Button createButton = new Button("createClaimButton");
         form.add(createButton);

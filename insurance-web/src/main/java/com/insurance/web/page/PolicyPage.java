@@ -34,9 +34,7 @@ public class PolicyPage extends StyledPage {
 
         PolicyFormPanel policyFormPanel =
                 new PolicyFormPanel("policyFormPanel",
-                    target -> {
-                        target.add(webMarkupContainer);
-                    });
+                    target -> target.add(webMarkupContainer));
 
         FeedbackPanel feedbackPanel = new FeedbackPanel("feedback");
         add(feedbackPanel);
