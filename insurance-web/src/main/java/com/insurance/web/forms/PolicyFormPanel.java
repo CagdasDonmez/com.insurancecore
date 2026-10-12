@@ -4,10 +4,10 @@ import com.insurance.domain.entity.Policy;
 import com.insurance.service.InvalidPolicyException;
 import com.insurance.service.PolicyService;
 import com.insurance.web.InsuranceApplication;
+import com.insurance.web.callback.PolicyCreatedCallback;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.extensions.markup.html.form.datetime.LocalDateTextField;
-import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.extensions.markup.html.form.DateTextField;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -23,13 +23,15 @@ public class PolicyFormPanel extends Panel {
 
     private static final long serialVersionUID = 1L;
     private Form<Policy> form;
+    private PolicyCreatedCallback policyCreatedCallback;
 
     private PolicyService service() {
         return ((InsuranceApplication) getApplication()).getPolicyService();
     }
 
-    public PolicyFormPanel(String id) {
+    public PolicyFormPanel(String id, PolicyCreatedCallback policyCreatedCallback) {
         super(id);
+        this.policyCreatedCallback = policyCreatedCallback;
         initPolicyForm();
     }
 
@@ -54,8 +56,13 @@ public class PolicyFormPanel extends Panel {
         form.add(premium);
 
         form.add(new TextField<Long>("customerId", customerId, Long.class).setRequired(true));
-        form.add(new LocalDateTextField("validFrom", "yyyy-MM-dd").setRequired(true));
-        form.add(new LocalDateTextField("validTo", "yyyy-MM-dd").setRequired(true));
+        DateTextField validFrom = new DateTextField("validFrom","yyyy-MM-dd");
+        validFrom.setRequired(true);
+        form.add(validFrom);
+
+        DateTextField validTo = new DateTextField("validTo","yyyy-MM-dd");
+        validTo.setRequired(true);
+        form.add(validTo);
 
         FeedbackPanel feedbackPanel = new FeedbackPanel("error_feedback");
         feedbackPanel.setOutputMarkupId(true);
@@ -70,6 +77,7 @@ public class PolicyFormPanel extends Panel {
                 try {
                     service().createPolicy(policy, customerId.getObject());
                     form.setModelObject(new Policy());
+                    policyCreatedCallback.onPolicyCreated(target);
                 } catch (InvalidPolicyException e)  {
                     this.error("Policy validation failed. " + e.getMessage());
                 }

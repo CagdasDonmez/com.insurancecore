@@ -28,7 +28,7 @@
                     <form wicket:id="createClaimForm" class="entry-form">
                         <label>Claim number <span class="required">*</span><input type="text" wicket:id="claimNumber" placeholder="e.g. CLM-2026-001" required></label>
                         <div class="field-pair"><label>Amount <span class="required">*</span><input type="text" inputmode="decimal" wicket:id="amount" placeholder="0.00" required></label><label>Policy ID <span class="required">*</span><input type="text" inputmode="numeric" wicket:id="policyId" placeholder="e.g. 1042" required></label></div>
-                        <label>Creation date <span class="required">*</span><input type="text" placeholder="yyyy-MM-dd" wicket:id="creationDate" aria-describedby="claim-date-help" required></label><p class="field-help" id="claim-date-help">Use today or a future date (yyyy-MM-dd).</p>
+                        <label>Creation date <span class="required">*</span><input type="date" placeholder="yyyy-MM-dd" wicket:id="creationDate" aria-describedby="claim-date-help" required></label><p class="field-help" id="claim-date-help">Use today or a future date (yyyy-MM-dd).</p>
                         <label>Description <span class="optional">Optional</span><input type="text" wicket:id="description" placeholder="A short summary of the claim"></label>
                         <div class="form-note"><span aria-hidden="true">&#9432;</span><span>Link this claim to an existing policy using its database ID.</span></div>
                         <button class="button button-primary submit-button" type="submit" wicket:id="createClaimButton">Create claim <span aria-hidden="true">&#8594;</span></button><p class="required-note">* Required fields</p>

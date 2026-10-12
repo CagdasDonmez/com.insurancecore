@@ -4,7 +4,7 @@
         <label>Policy number <span class="required">*</span><input type="text" wicket:id="policyNumber" placeholder="e.g. POL-2026-001" required></label>
         <div class="field-pair"><label>Premium <span class="required">*</span><input type="text" inputmode="decimal" wicket:id="premium" placeholder="0.00" required></label><label>Customer ID <span class="required">*</span><input type="text" inputmode="numeric" wicket:id="customerId" placeholder="e.g. 1042" required></label></div>
         <div class="form-divider">COVERAGE PERIOD</div>
-        <div class="field-pair"><label>Valid from <span class="required">*</span><input type="text" placeholder="yyyy-MM-dd" wicket:id="validFrom" aria-describedby="policy-date-help" required></label><label>Valid to <span class="required">*</span><input type="text" placeholder="yyyy-MM-dd" wicket:id="validTo" aria-describedby="policy-date-help" required></label></div>
+        <div class="field-pair"><label>Valid from <span class="required">*</span><input type="date" placeholder="yyyy-MM-dd" wicket:id="validFrom" aria-describedby="policy-date-help" required></label><label>Valid to <span class="required">*</span><input type="date" placeholder="yyyy-MM-dd" wicket:id="validTo" aria-describedby="policy-date-help" required></label></div>
         <p class="field-help" id="policy-date-help">Use yyyy-MM-dd. End date must be after start date.</p>
         <div class="form-note"><span aria-hidden="true">&#9432;</span><span>Use an existing customer's database ID to connect this policy.</span></div>
         <button type="submit" class="button button-primary submit-button" wicket:id="createButton">Create policy <span aria-hidden="true">&#8594;</span></button><p class="required-note">* Required fields</p>

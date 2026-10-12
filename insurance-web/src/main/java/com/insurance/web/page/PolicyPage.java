@@ -4,7 +4,6 @@ import com.insurance.domain.entity.Policy;
 import com.insurance.service.PolicyService;
 import com.insurance.web.forms.PolicyFormPanel;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.WebPage;
 import com.insurance.web.InsuranceApplication;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
@@ -27,14 +26,17 @@ public class PolicyPage extends StyledPage {
 
     public void initPage() {
         add(new Label("policies", "Policies"));
-        PolicyFormPanel policyFormPanel = new PolicyFormPanel("policyFormPanel");
-        add(policyFormPanel);
-
         WebMarkupContainer webMarkupContainer = new WebMarkupContainer("webMarkupContainer");
         webMarkupContainer.setOutputMarkupId(true);
 
         ListView<Policy> policyListView = getPolicyListView();
         webMarkupContainer.add(policyListView);
+
+        PolicyFormPanel policyFormPanel =
+                new PolicyFormPanel("policyFormPanel",
+                    target -> {
+                        target.add(webMarkupContainer);
+                    });
 
         FeedbackPanel feedbackPanel = new FeedbackPanel("feedback");
         add(feedbackPanel);
@@ -46,6 +48,7 @@ public class PolicyPage extends StyledPage {
             }
         };
 
+        add(policyFormPanel);
         add(claimsLink);
         add(webMarkupContainer);
     }
@@ -64,6 +67,8 @@ public class PolicyPage extends StyledPage {
                 Policy policy = item.getModelObject();
                 item.add(new Label("policyNumber", policy.getPolicyNumber()));
                 item.add(new Label("policyPremium", policy.getPremium()));
+                item.add(new Label("validFrom", policy.getValidFrom()));
+                item.add(new Label("validTo", policy.getValidTo()));
             }
         };
     }

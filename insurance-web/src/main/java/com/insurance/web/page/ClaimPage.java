@@ -3,6 +3,7 @@ package com.insurance.web.page;
 import com.insurance.domain.entity.Claim;
 import com.insurance.service.ClaimService;
 import com.insurance.service.InvalidClaimException;
+import org.apache.wicket.extensions.markup.html.form.DateTextField;
 import org.apache.wicket.markup.html.WebPage;
 import com.insurance.web.InsuranceApplication;
 import org.apache.wicket.model.Model;
@@ -21,6 +22,8 @@ import org.apache.wicket.validation.IValidationError;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 public class ClaimPage extends StyledPage {
@@ -84,11 +87,15 @@ public class ClaimPage extends StyledPage {
         });
         form.add(amount);
 
-        LocalDateTextField creationDate = new LocalDateTextField("creationDate", "yyyy-MM-dd");
+        // LocalDateTextField creationDate = new LocalDateTextField("creationDate", "yyyy-MM-dd");
+        DateTextField creationDate = new DateTextField("creationDate","yyyy-MM-dd");
         creationDate.setRequired(true);
+
         creationDate.add(validatable -> {
-            LocalDate value = validatable.getValue();
-            if (value.isBefore(LocalDate.now())) {
+            Date value = validatable.getValue();
+            LocalDate now = LocalDate.now();
+            Date actual_date = Date.from(now.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            if (value.before(actual_date)) {
                 validatable.error((IValidationError) messageSource -> "Creation Date can not be in the past.");
             }
         });
