@@ -1,0 +1,33 @@
+services:
+  database:
+    image: postgres:16
+    container_name: insurance-postgres
+    environment:
+      POSTGRES_DB: insurance_db
+      POSTGRES_USER: insurance-user
+      POSTGRES_PASSWORD: insurance-password
+    ports:
+      - "5433:5432"
+    volumes:
+      - insurance-data:/var/lib/postgresql/data
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.4.0
+    container_name: insurance-keycloak
+    command: start-dev
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL_HOST: database
+      KC_DB_URL_PORT: 5432
+      KC_DB_URL_DATABASE: keycloak_db
+      KC_DB_USERNAME: insurance-user
+      KC_DB_PASSWORD: insurance-password
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database 
+
+volumes:
+  insurance-data:
